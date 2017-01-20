@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.annotation.RequestScope;
 
 import com.hello.dal.models.Product;
 
 @Repository
 public class ProductRepository implements IRepository {
+	
 	public static Map<Long,Product> productsList = new HashMap<Long,Product>();
 	
 	public ProductRepository() {
@@ -21,11 +23,7 @@ public class ProductRepository implements IRepository {
 	
 	@Override
 	public List<Product> getAllProducts() {
-		List<Product> products = new ArrayList<Product>();
-		for (Product product : products) {
-			products.add(product);
-		}
-		return products;
+		return new ArrayList<Product>(productsList.values());
 	}
 
 	@Override
