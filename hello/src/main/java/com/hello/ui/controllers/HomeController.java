@@ -1,8 +1,12 @@
 package com.hello.ui.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,16 +27,31 @@ public class HomeController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String index(Model model){
-		model.addAttribute("pageTitle", "Home");
-		model.addAttribute("product", new Product());
 		model.addAttribute("products",productRepository.getAllProducts());
-
 		return "home";
 	}
 	
+	@RequestMapping(value="/add",method=RequestMethod.GET)
+	public String addOrUpdate(Model model){
+		model.addAttribute("product", new Product());
+		return "add";
+	}
+	
 	@RequestMapping(value="/saveProduct",method=RequestMethod.POST)
-	public String addOrUpdate(Product p,Model model){
+	public String addOrUpdate(@Valid Product p,BindingResult result,Model model){
+		if(result.hasErrors()){
+			return "add";
+		}
 		productRepository.addOrUpdateProduct(p);
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/editProduct",method=RequestMethod.GET)
+	public String editProduct(Model model, Long id){
+		Product p = productRepository.getProduct(id);
+		model.addAttribute("product", p);
+		return "add";
+	}
+	
+	
 }

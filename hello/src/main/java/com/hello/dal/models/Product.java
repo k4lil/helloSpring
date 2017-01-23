@@ -1,12 +1,17 @@
 package com.hello.dal.models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.stereotype.Component;
 
 @Component
 public class Product {
-	
+	@NotNull(message="champ obligatoire")
 	public Long id;
+    @Size(min=5)
 	public String desc;
+    @NotNull
 	public long quantity;
 	/* Constructor */
 	public Product() {

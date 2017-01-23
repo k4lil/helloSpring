@@ -34,4 +34,9 @@ public class ProductRepository implements IRepository {
 	public boolean deleteProduct(Long id) {
 		return productsList.remove(id)!= null ? true : false;
 	}
+	
+	@Override
+	public Product getProduct(Long id) {
+		return productsList.get(id);
+	}
 }

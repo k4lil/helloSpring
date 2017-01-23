@@ -8,4 +8,5 @@ public interface IRepository {
 	public List<Product> getAllProducts();
 	public boolean addOrUpdateProduct(Product p);
 	public boolean deleteProduct(Long id);
+	public Product getProduct(Long id);
 }
